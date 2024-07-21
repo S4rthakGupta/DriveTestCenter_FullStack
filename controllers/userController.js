@@ -20,13 +20,13 @@ const dashboard = (req, res) =>
   }
 };
 
-// Render G2 page.
+// Rendering the G2 page for Drivers with available appointment slots.
 const g2Page = (req, res) => 
 {
   if (res.locals.isAuthenticated && res.locals.user.userType === 'Driver') 
   {
     const userId = res.locals.user._id;
-    const selectedDate = req.query.date || moment().format('YYYY-MM-DD'); // default to today
+    const selectedDate = req.query.date || moment().format('YYYY-MM-DD');
 
     User.findById(userId)
       .then(user => 
@@ -37,12 +37,12 @@ const g2Page = (req, res) =>
             const message = req.session.message;
             delete req.session.message;
 
-            // Fetch the user's current appointment if any
+            // This will fetch the user's current appointment if any
             const userAppointment = user.appointment ? 
               appointments.find(appointment => appointment._id.toString() === user.appointment.toString()) 
               : null;
 
-            // Check if the user has provided all personal information
+            // This will check if the user has provided all personal information
             const hasPersonalInfo = user.firstName && user.lastName && user.licenseNumber && user.age;
 
             console.log('User object for G2 page:', user);
@@ -54,7 +54,7 @@ const g2Page = (req, res) =>
               selectedDate, 
               message, 
               userAppointment,
-              hasPersonalInfo  // Pass this flag to the view
+              hasPersonalInfo  
             });
           })
           .catch(err => 
@@ -75,7 +75,7 @@ const g2Page = (req, res) =>
   }
 };
 
-// Render G page.
+// Rendering the G page for Drivers showing their information.
 const gPage = (req, res) => 
 {
   if (res.locals.isAuthenticated && res.locals.user.userType === 'Driver') 
@@ -90,7 +90,7 @@ const gPage = (req, res) =>
         const message = req.session.message;
         delete req.session.message;
 
-        // Check if the user has provided all personal information
+        // This will check if the user has provided all personal information
         const hasPersonalInfo = user.firstName && user.lastName && user.licenseNumber && user.age;
 
         res.render('pages/g', 
@@ -113,7 +113,7 @@ const gPage = (req, res) =>
   }
 };
 
-// Save user data.
+// Controller function for saving user data
 const saveUserData = (req, res) => 
 {
   if (res.locals.isAuthenticated && res.locals.user.userType === 'Driver') 
@@ -139,7 +139,8 @@ const saveUserData = (req, res) =>
     {
       updateData.appointment = appointmentId;
     }
-
+    
+    // This below code will update user data in database and the user will be able to do it as many times as they want.
     User.findByIdAndUpdate(userId, updateData, { new: true })
       .then(updatedUser => 
       {
