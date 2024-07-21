@@ -15,5 +15,11 @@
 // Sarthak: Created the controllers folder and provided the main functionality of the code for both login and signup (authentication) as well as the rest of the pages (g,g2,dashboard etc).
 // Harshkumar: Creating the login.ejs page and added the HTML for the /login and /signup page & did the if-else conditioning in the navbar (partials > header.ejs).
 // Worked Collaboratively: on the MVC pattern for organizing the code well and easy to read so that it get's easy to work upon in the upcoming assignment.
-
 **Part NOT COMPLETED**: License Number is not hashed and no Encryption or Decryption is done on that as discussed in the class on 11th July, 2024. 
+
+
+// Work done for Assignment-4:
+// Nidhi: edited the header.ejs file by adding if-else for the (Admin) for the appointment page, worked on the saveUserData inside userConrtoller.js.
+// Sarthak: Worked on the userController inside the controllers folder and worked on the functionality on how data should be displayed on g and g2 page as well as data that is supposed to be fetched from the appointments and display in the driver page..
+// Harshkumar: Created the appointment.js file in the models folder and linked it inside the user.js model, created the ejs page for appointment and added required elements in that.
+// Worked Collaboratively: on the Routing as well as the Controlling of the application.
