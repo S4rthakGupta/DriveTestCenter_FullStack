@@ -17,7 +17,8 @@ app.use(session({
   secret: 'sarthak9814',
   resave: false,
   saveUninitialized: true
-}));
+})); 
+
 
 app.use((req, res, next) => {
   res.locals.isAuthenticated = req.session.isAuthenticated || false;
