@@ -30,7 +30,7 @@ app.use(authRoutes);
 app.use(isAuthenticated);
 app.use(userRoutes);
 
-const PORT = 3000;
+const PORT = 3001;
 const URI = 'mongodb+srv://sarthak1797:sarthak1797@cluster-drivetest.xdvmr6p.mongodb.net/Drive-Test-DB?retryWrites=true&w=majority&appName=Cluster-DriveTest'
 
 mongoose.connect(URI)
