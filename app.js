@@ -1,6 +1,3 @@
-// Group Number: 1
-// Members: Sarthak Gupta, Nidhi Katiyar, Harshkumar Patel.
-// Work done by team members written in (work-done.txt) file in the directory.
 // Assignment: 4
 
 // This code will import all the modules.
