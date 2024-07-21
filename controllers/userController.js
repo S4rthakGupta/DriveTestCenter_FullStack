@@ -31,7 +31,8 @@ const g2Page = (req, res) => {
 
             // Check if the user has provided all personal information
             const hasPersonalInfo = user.firstName && user.lastName && user.licenseNumber && user.age;
-            
+
+            console.log('User object for G2 page:', user);
             res.render('pages/g2', { 
               title: 'G2 Page', 
               user, 
@@ -63,6 +64,8 @@ const gPage = (req, res) => {
 
     User.findById(userId).populate('appointment')
       .then(user => {
+        console.log('Fetched user data:', user); // Log user data
+
         const message = req.session.message;
         delete req.session.message;
 
@@ -88,6 +91,7 @@ const gPage = (req, res) => {
 // Save user data.
 const saveUserData = (req, res) => {
   if (res.locals.isAuthenticated && res.locals.user.userType === 'Driver') {
+    console.log('Request body:', req.body); // Log the request body
     const userId = res.locals.user._id;
     const { firstName, lastName, licenseNumber, age, carMake, carModel, carYear, plateNumber, appointmentId } = req.body;
 
@@ -110,6 +114,7 @@ const saveUserData = (req, res) => {
     User.findByIdAndUpdate(userId, updateData, { new: true })
       .then(updatedUser => {
         if (!updatedUser) return res.status(404).send('User not found');
+        console.log('Updated user data:', updatedUser);
         req.session.message = 'User data updated successfully';
         res.redirect('/g');
       })
@@ -147,10 +152,12 @@ const bookAppointment = (req, res) => {
         Appointment.findByIdAndUpdate(appointmentId, { isTimeSlotAvailable: false }, { new: true })
           .then(updatedAppointment => {
             if (!updatedAppointment) return res.status(404).send('Appointment not found');
+            console.log('Updated appointment data:', updatedAppointment);
 
             User.findByIdAndUpdate(userId, { appointment: appointmentId }, { new: true })
               .then(updatedUser => {
                 if (!updatedUser) return res.status(404).send('User not found');
+                console.log('Updated user data:', updatedUser);
                 req.session.message = 'Appointment booked successfully';
                 res.redirect('/g');
               })
@@ -177,7 +184,10 @@ const addAppointment = (req, res) => {
   if (res.locals.isAuthenticated && res.locals.user.userType === 'Admin') {
     const { date, times } = req.body;
 
+    console.log('Received appointment data:', { date, times });
+
     if (!date || !times) {
+      console.log('Missing date or times in request body');
       return res.status(400).send('Missing date or times in request body');
     }
 
@@ -187,6 +197,8 @@ const addAppointment = (req, res) => {
       isTimeSlotAvailable: true
     })) : [{ date, time: times, isTimeSlotAvailable: true }];
 
+    console.log('Appointments to be added:', appointments);
+
     const timeSlots = Array.isArray(times) ? times : [times];
     Appointment.find({ date, time: { $in: timeSlots } })
       .then(existingAppointments => {
@@ -195,7 +207,8 @@ const addAppointment = (req, res) => {
           return res.redirect('/appointment');
         } else {
           Appointment.insertMany(appointments)
-            .then(() => {
+            .then(insertedAppointments => {
+              console.log('Appointments added successfully:', insertedAppointments);
               req.session.message = 'Appointments added successfully';
               res.redirect('/appointment');
             })
@@ -221,6 +234,7 @@ const getBookedTimesForDate = (req, res) => {
   Appointment.find({ date, isTimeSlotAvailable: false })
     .then(appointments => {
       const bookedTimes = appointments.map(app => app.time);
+      console.log('Booked times for date', date, ':', bookedTimes);
       res.json(bookedTimes);
     })
     .catch(err => {
@@ -228,7 +242,6 @@ const getBookedTimesForDate = (req, res) => {
       res.status(500).send('Error fetching appointments');
     });
 };
-
 
 module.exports = {
   dashboard,
