@@ -9,7 +9,6 @@ const userSchema = new mongoose.Schema({
   lastName: { type: String, default: "default" },
   licenseNumber: { type: String, default: "default" },
   age: { type: Number, default: 0 },
-  dob: { type: Date },
   carDetails: {
     make: { type: String, default: "default" },
     model: { type: String, default: "default" },

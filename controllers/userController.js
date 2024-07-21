@@ -30,7 +30,7 @@ const g2Page = (req, res) => {
               : null;
 
             // Check if the user has provided all personal information
-            const hasPersonalInfo = user.firstName && user.lastName && user.licenseNumber && user.age && user.dob;
+            const hasPersonalInfo = user.firstName && user.lastName && user.licenseNumber && user.age;
             
             res.render('pages/g2', { 
               title: 'G2 Page', 
@@ -63,13 +63,11 @@ const gPage = (req, res) => {
 
     User.findById(userId).populate('appointment')
       .then(user => {
-        console.log('Fetched user data:', user); // Log user data
-
         const message = req.session.message;
         delete req.session.message;
 
         // Check if the user has provided all personal information
-        const hasPersonalInfo = user.firstName && user.lastName && user.licenseNumber && user.age && user.dob;
+        const hasPersonalInfo = user.firstName && user.lastName && user.licenseNumber && user.age;
 
         res.render('pages/g', { 
           title: 'G Page', 
@@ -90,16 +88,14 @@ const gPage = (req, res) => {
 // Save user data.
 const saveUserData = (req, res) => {
   if (res.locals.isAuthenticated && res.locals.user.userType === 'Driver') {
-    console.log('Request body:', req.body); // Log the request body
     const userId = res.locals.user._id;
-    const { firstName, lastName, licenseNumber, age, dob, carMake, carModel, carYear, plateNumber, appointmentId } = req.body;
+    const { firstName, lastName, licenseNumber, age, carMake, carModel, carYear, plateNumber, appointmentId } = req.body;
 
     const updateData = {
       firstName,
       lastName,
       licenseNumber,
       age,
-      dob,
       'carDetails.make': carMake,
       'carDetails.model': carModel,
       'carDetails.year': carYear,
@@ -144,7 +140,7 @@ const bookAppointment = (req, res) => {
 
     User.findById(userId)
       .then(user => {
-        if (!user.firstName || !user.lastName || !user.licenseNumber || !user.age || !user.dob) {
+        if (!user.firstName || !user.lastName || !user.licenseNumber || !user.age) {
           return res.status(403).send('Please complete your personal information before booking an appointment.');
         }
 
@@ -181,10 +177,7 @@ const addAppointment = (req, res) => {
   if (res.locals.isAuthenticated && res.locals.user.userType === 'Admin') {
     const { date, times } = req.body;
 
-    console.log('Received appointment data:', { date, times });
-
     if (!date || !times) {
-      console.log('Missing date or times in request body');
       return res.status(400).send('Missing date or times in request body');
     }
 
@@ -193,8 +186,6 @@ const addAppointment = (req, res) => {
       time,
       isTimeSlotAvailable: true
     })) : [{ date, time: times, isTimeSlotAvailable: true }];
-
-    console.log('Appointments to be added:', appointments);
 
     const timeSlots = Array.isArray(times) ? times : [times];
     Appointment.find({ date, time: { $in: timeSlots } })
@@ -205,7 +196,6 @@ const addAppointment = (req, res) => {
         } else {
           Appointment.insertMany(appointments)
             .then(() => {
-              console.log('Appointments added successfully');
               req.session.message = 'Appointments added successfully';
               res.redirect('/appointment');
             })
