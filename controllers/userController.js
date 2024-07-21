@@ -165,11 +165,15 @@ const saveUserData = (req, res) =>
 // Rendering the appointment page for Admin users to manage appointments.
 const appointmentPage = (req, res) => 
 {
+  
+  // This below line will check if the user is authenticated and is an Admin.
   if (res.locals.isAuthenticated && res.locals.user.userType === 'Admin') {
     const message = req.session.message;
-    // This will pass message to the template
+
+    // This will render the appointment management page with the title and optional message
     res.render('pages/appointment', { title: 'Appointment', message }); 
   } 
+  // Otherwise user will be redirected to login again if the userType is not Admin.
   else 
   {
     res.redirect('/login');
