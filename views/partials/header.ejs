@@ -9,6 +9,9 @@
             <li class="nav-item">
                 <a class="nav-link" href="/dashboard">Dashboard</a>
             </li>
+            
+            <!-- Adding if else code so that if user is logged in, they see everything and if not, they will be asked to login. -->
+             <!-- Making sure that if the user type is Admin then only they see the appointment page otherwise not. -->
             <% if (isAuthenticated) { %>
                 <% if (user.userType === 'Driver') { %>
                     <li class="nav-item">
