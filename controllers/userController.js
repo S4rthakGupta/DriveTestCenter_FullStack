@@ -134,7 +134,7 @@ const saveUserData = (req, res) =>
       'carDetails.plateNumber': plateNumber
     };
 
-    // Include appointmentId if it exists
+    // Including appointmentId if it exists.
     if (appointmentId) 
     {
       updateData.appointment = appointmentId;
@@ -161,12 +161,14 @@ const saveUserData = (req, res) =>
   }
 };
 
-// Render appointment page for Admin.
+// For assignment-4 (Newly Added)
+// Rendering the appointment page for Admin users to manage appointments.
 const appointmentPage = (req, res) => 
 {
   if (res.locals.isAuthenticated && res.locals.user.userType === 'Admin') {
-    const message = req.session.message; // Fetch message from session if needed
-    res.render('pages/appointment', { title: 'Appointment', message }); // Pass message to the template
+    const message = req.session.message;
+    // This will pass message to the template
+    res.render('pages/appointment', { title: 'Appointment', message }); 
   } 
   else 
   {
@@ -174,7 +176,7 @@ const appointmentPage = (req, res) =>
   }
 };
 
-// Add appointment slots.
+// Controller function for booking an appointment slot for Drivers.
 const bookAppointment = (req, res) => 
 {
   if (res.locals.isAuthenticated && res.locals.user.userType === 'Driver') 
@@ -305,6 +307,7 @@ const getBookedTimesForDate = (req, res) =>
     });
 };
 
+// Exporting all controller functions that we created above.
 module.exports = 
 {
   dashboard,
