@@ -244,19 +244,22 @@ const bookAppointment = (req, res) =>
 
 // Controller function for adding appointments by Admin.
 const addAppointment = (req, res) => 
-{
+{  
+  // This below if statement will check if the user is authenticated and the userType is Admin.
   if (res.locals.isAuthenticated && res.locals.user.userType === 'Admin') 
   {
     const { date, times } = req.body;
 
     console.log('Received appointment data:', { date, times });
 
+    // This below if condition will check if date and times are provided.
     if (!date || !times) 
     {
       console.log('Missing date or times in request body');
       return res.status(400).send('Missing date or times in request body');
     }
 
+    // Creating an array of appointment slots
     const appointments = Array.isArray(times) ? times.map(time => (
     {
       date,
@@ -267,6 +270,9 @@ const addAppointment = (req, res) =>
     console.log('Appointments to be added:', appointments);
 
     const timeSlots = Array.isArray(times) ? times : [times];
+
+    
+    // This will check if any of the provided time slots already exist for the given date.
     Appointment.find({ date, time: { $in: timeSlots } })
       .then(existingAppointments => 
       {
@@ -275,7 +281,8 @@ const addAppointment = (req, res) =>
           return res.redirect('/appointment');
         } 
         else 
-        {
+        {          
+          // This will insert the new appointment slots into the MongoDB database.
           Appointment.insertMany(appointments)
             .then(insertedAppointments => 
             {
@@ -297,6 +304,7 @@ const addAppointment = (req, res) =>
       });
   } 
   else 
+  // This else condition will redirect to login if the user is not an Admin
   {
     res.redirect('/login');
   }
@@ -306,12 +314,16 @@ const addAppointment = (req, res) =>
 const getBookedTimesForDate = (req, res) =>
 {
   const date = req.params.date;
-
+ 
+  // This will find all appointments that are booked (not available) for the given date.
   Appointment.find({ date, isTimeSlotAvailable: false })
     .then(appointments => 
     {
+      // It will extract the time slots from the appointments.
       const bookedTimes = appointments.map(app => app.time);
       console.log('Booked times for date', date, ':', bookedTimes);
+      
+      // Respond with the booked times as JSON.
       res.json(bookedTimes);
     })
     .catch(err => 
