@@ -1,0 +1,19 @@
+// Work did for Assignment-1:
+// Sarthak: Created the app.js file and created the proper file directory.
+// Nidhi: I created the layout.ejs file and included <% include - "layout" %> in each .ejs file in the pages folder.
+// Harshkumar: Changed the styling according to the requirement and overriden the bootstrap as well as creating the header.ejs file and adding navbar to it.
+
+
+// Work done for Assignment-2:
+// Sarthak: Created the DataBase named (Drive-Test-DB) & downloaded the required modules as well as connected the DB in the app.js file, other than that created a Models folder and created and defined the schema for the MongoDB in that.
+// Nidhi: Created the forms for the G2 as well G page, the hidden input fields as well in which if the user's license number matches then only it displays.
+// Harshkumar: Created form validations for "G and G2 page" in the g.ejs and g2.ejs files under the views folder and in the pages in the directory, added a route for success page in the app.js.
+// Worked Collaboratively: on the app.js for getting the data from the G2 forms and updating it as well as managing the POST requests.
+
+// Work done for Assignment-3:
+// Nidhi: Created the Routes folder to each page and tested it to make sure if has no errors.
+// Sarthak: Created the controllers folder and provided the main functionality of the code for both login and signup (authentication) as well as the rest of the pages (g,g2,dashboard etc).
+// Harshkumar: Creating the login.ejs page and added the HTML for the /login and /signup page & did the if-else conditioning in the navbar (partials > header.ejs).
+// Worked Collaboratively: on the MVC pattern for organizing the code well and easy to read so that it get's easy to work upon in the upcoming assignment.
+
+**Part NOT COMPLETED**: License Number is not hashed and no Encryption or Decryption is done on that as discussed in the class on 11th July, 2024. 
