@@ -1,5 +1,7 @@
+<!-- This below line will include (EJS Template) all the HTML as well as the BOOTSTRAP in this page. -->
 <%- include('../layout') %>
 
+<!-- If else block to check if the message is available before the page gets rendered. -->
 <% if (message) { %>
   <div class="alert alert-success" role="alert">
     <%= message %>
@@ -41,19 +43,26 @@
       </div>
     </div>
 
+    <!-- This below conditional statement will check if personal information is not provided. -->
     <% if (!hasPersonalInfo) { %>
       <div class="section mt-4">
         <h2>Available Appointment Slots</h2>
+        
+        <!-- This will check if there are any available appointments. -->
         <% if (appointments.length > 0) { %>
           <div class="form-group">
             <label for="appointmentSlot">Select a time slot:</label>
             <select class="form-control" id="appointmentSlot" name="appointmentId" required>
+
+              
+              <!-- This will iterate through appointments (using forEach loop) and create an option for each. -->
               <% appointments.forEach(appointment => { %>
                 <option value="<%= appointment._id %>"><%= appointment.time %></option>
               <% }) %>
             </select>
           </div>
         <% } else { %>
+          <!-- if no slots are available it will come into this else block and display the <p> tag below. -->
           <p>No available slots for the selected date.</p>
         <% } %>
       </div>
@@ -83,6 +92,7 @@
   </form>
 </div>
 
+<!-- This below is JavaScript to handle appointment date changes. -->
 <script>
   document.getElementById('appointmentDate').addEventListener('change', function() {
     const selectedDate = this.value;
