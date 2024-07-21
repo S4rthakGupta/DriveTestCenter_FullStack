@@ -1,21 +1,29 @@
+// Requiring the User Schema from the models folder.
 const User = require('../models/user');
+
+// Requiring bcyrpt for hashing of password when user sign's up.
 const bcrypt = require('bcrypt');
 
-// Render login page.
-const renderLogin = (req, res) => {
+// Rendering the login page and giving it's path and title as well.
+const renderLogin = (req, res) => 
+{
   res.render('pages/login', { title: 'Login' });
 };
 
-// Render signup page.
-const renderSignup = (req, res) => {
+// Rendering the signup page and giving it's path and title as well.
+const renderSignup = (req, res) => 
+{
   res.render('pages/signup', { title: 'Sign Up' });
 };
 
-// Handle signup form submission.
-const signup = async (req, res) => {
+// Handling the submission for the signup form.
+const signup = async (req, res) => 
+{
   const { username, password, confirmPassword, userType } = req.body;
-
-  if (password !== confirmPassword) {
+  
+  // This below if else block will check if the passwords match or not.
+  if (password !== confirmPassword) 
+  {
     return res.send(`
       <script>
         alert('Passwords do not match');
@@ -23,10 +31,13 @@ const signup = async (req, res) => {
       </script>
     `);
   }
-
-  try {
+  
+  // This will check from the DB (User) if the same username in the DB exists or not.
+  try
+  {
     const user = await User.findOne({ username });
-    if (user) {
+    if (user) 
+    {
       return res.send(`
         <script>
           alert('Username already exists. Please login or choose a different username.');
@@ -34,8 +45,10 @@ const signup = async (req, res) => {
         </script>
       `);
     }
-
-    const newUser = new User({
+    
+    // Creating new User inside the database.
+    const newUser = new User(
+    {
       username,
       password,
       userType,
@@ -49,7 +62,8 @@ const signup = async (req, res) => {
         plateNumber: 'default'
       }
     });
-
+    
+    // Giving an alert that user is saved.
     await newUser.save();
     res.send(`
       <script>
@@ -57,6 +71,8 @@ const signup = async (req, res) => {
         window.location.href = '/login';
       </script>
     `);
+    
+    // If there is an error saving data then this catch block will give an error with a message.
   } catch (err) {
     console.log('Error saving user data:', err);
     res.status(500).send(`
@@ -68,13 +84,17 @@ const signup = async (req, res) => {
   }
 };
 
-// Handle login form submission.
-const login = async (req, res) => {
+// Handling the form submission for login
+const login = async (req, res) => 
+{
   const { username, password } = req.body;
-
-  try {
+  
+  // This will find the username from the DB.
+  try 
+  {
     const user = await User.findOne({ username });
-    if (!user) {
+    if (!user) 
+    {
       return res.send(`
         <script>
           alert('Invalid username or password');
@@ -82,19 +102,27 @@ const login = async (req, res) => {
         </script>
       `);
     }
-
+    
+    // This will validate the password.
     const isPasswordValid = await bcrypt.compare(password, user.password);
 
-    if (isPasswordValid) {
+    if (isPasswordValid)
+    {      
+      // Setting session variable for authenticated users.
       req.session.user = user;
       req.session.isAuthenticated = true;
+      
+      // If the user successfully logs in then they will be redirected to dashboard page.
       res.send(`
         <script>
           alert('Login successful');
           window.location.href = '/dashboard';
         </script>
       `);
-    } else {
+    }
+    else 
+    {
+      // If the password is incorrect, user will be redirected to login page with an alert.
       res.send(`
         <script>
           alert('Invalid username or password');
@@ -102,7 +130,10 @@ const login = async (req, res) => {
         </script>
       `);
     }
-  } catch (err) {
+  }
+  catch (err) 
+  {    
+    // Handling error during login.
     console.log('Error during login:', err);
     res.status(500).send(`
       <script>
@@ -113,15 +144,19 @@ const login = async (req, res) => {
   }
 };
 
-// Handle logout.
-const logout = (req, res) => {
-  req.session.destroy(err => {
+// This will handle the logout and will also destroy the session.
+const logout = (req, res) => 
+{
+  req.session.destroy(err => 
+  {
     if (err) return res.status(500).send('Error logging out');
     res.redirect('/login');
   });
 };
 
-module.exports = {
+// Exporting modules that are created.
+module.exports = 
+{
   renderLogin,
   renderSignup,
   signup,
