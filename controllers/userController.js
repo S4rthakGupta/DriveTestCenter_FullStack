@@ -86,14 +86,15 @@ const gPage = (req, res) => {
     res.redirect('/login');
   }
 };
+
 // Save user data.
 const saveUserData = (req, res) => {
   if (res.locals.isAuthenticated && res.locals.user.userType === 'Driver') {
     console.log('Request body:', req.body); // Log the request body
     const userId = res.locals.user._id;
-    const { firstName, lastName, licenseNumber, age, dob, carMake, carModel, carYear, plateNumber } = req.body;
+    const { firstName, lastName, licenseNumber, age, dob, carMake, carModel, carYear, plateNumber, appointmentId } = req.body;
 
-    User.findByIdAndUpdate(userId, {
+    const updateData = {
       firstName,
       lastName,
       licenseNumber,
@@ -103,7 +104,14 @@ const saveUserData = (req, res) => {
       'carDetails.model': carModel,
       'carDetails.year': carYear,
       'carDetails.plateNumber': plateNumber
-    }, { new: true })
+    };
+
+    // Include appointmentId if it exists
+    if (appointmentId) {
+      updateData.appointment = appointmentId;
+    }
+
+    User.findByIdAndUpdate(userId, updateData, { new: true })
       .then(updatedUser => {
         if (!updatedUser) return res.status(404).send('User not found');
         req.session.message = 'User data updated successfully';
