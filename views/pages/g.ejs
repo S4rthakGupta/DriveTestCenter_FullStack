@@ -1,8 +1,10 @@
+<!-- This below line will include (EJS Template) all the HTML as well as the BOOTSTRAP in this page. -->
 <%- include('../layout') %>
 
 <div class="container g-page-container">
   <h1 class="text-center mb-4">You can retrieve or update your data.</h1>
 
+  <!-- If else block to check if the user data is available before the page gets rendered. -->
   <% if (user) { %>
     <% if (message) { %>
       <div class="alert alert-success" role="alert">
@@ -26,12 +28,14 @@
         <div class="card mb-4">
           <div class="card-body">
             <h2 class="card-title text-center mb-3">Car Details</h2>
+            <!-- This if block will check if car details are available. -->
             <% if (user.carDetails) { %>
               <p class="card-text"><strong>Make:</strong> <%= user.carDetails.make %></p>
               <p class="card-text"><strong>Model:</strong> <%= user.carDetails.model %></p>
               <p class="card-text"><strong>Year:</strong> <%= user.carDetails.year %></p>
               <p class="card-text"><strong>Plate Number:</strong> <%= user.carDetails.plateNumber %></p>
             <% } else { %>
+              <!-- It will display this message if no car details are available. -->
               <p class="card-text">No car details available.</p>
             <% } %>
           </div>
@@ -45,18 +49,22 @@
           <div class="card-body">
             <h2 class="card-title text-center mb-3">Appointment Details</h2>
             <p class="card-text">
-              <strong>Date:</strong>
+              <strong>Date:</strong>              
+              <!-- This below code will check if appointment date is available and will format it -->
               <% if (user.appointment && user.appointment.date) { %>
                 <%= new Date(user.appointment.date).toISOString().split('T')[0] %>
               <% } else { %>
+                <!-- It will display N/A if appointment dates are not available. (Not added through Admin UserType) -->
                 N/A
               <% } %>
             </p>
             <p class="card-text">
               <strong>Time:</strong>
+              <!-- This below line will check if appointment time is available -->
               <% if (user.appointment && user.appointment.time) { %>
                 <%= user.appointment.time %>
-              <% } else { %>
+              <% } else { %>                
+                <!-- It will display N/A if no appointment time is available -->
                 N/A
               <% } %>
             </p>
@@ -65,6 +73,7 @@
       </div>
     </div>
 
+    <!-- This below is for updating the Car information. -->
     <% if (hasPersonalInfo) { %>
       <div class="section mt-4">
         <form id="updateForm" action="/saveUserData" method="POST">
@@ -92,8 +101,9 @@
           </div>
         </form>
       </div>
-    <% } else { %>
+    <% } else { %>      
       <div class="alert alert-warning mt-4">
+      <!-- It will display a warning message if personal information is not available. -->
         <p>Please update your personal information to be able to change your appointment.</p>
       </div>
     <% } %>
