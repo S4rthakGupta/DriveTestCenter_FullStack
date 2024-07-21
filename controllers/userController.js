@@ -229,6 +229,7 @@ const bookAppointment = (req, res) =>
   }
 };
 
+// Controller function for adding appointments by Admin.
 const addAppointment = (req, res) => 
 {
   if (res.locals.isAuthenticated && res.locals.user.userType === 'Admin') 
@@ -288,7 +289,7 @@ const addAppointment = (req, res) =>
   }
 };
 
-// Fetch booked time slots for a date.
+// This will fetch the booked time slots for a given date.
 const getBookedTimesForDate = (req, res) =>
 {
   const date = req.params.date;
