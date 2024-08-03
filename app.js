@@ -53,7 +53,7 @@ app.use(userRoutes);
 const PORT = 3001;
 
 // Please add your own connection String.
-const URI = 'mongodb+srv://myDatabaseUser:D1fficultP%40ssw0rd@mongodb0.example.com/?authSource=admin&replicaSet=myRepl'
+const URI = 'mongodb+srv://sarthak1797:sarthak1797@cluster-drivetest.xdvmr6p.mongodb.net/Drive-Test-DB?retryWrites=true&w=majority&appName=Cluster-DriveTest'
 
 // Connecting to MongoDB using Mongoose package which is installed already using (npm i mongoose).
 mongoose.connect(URI)
