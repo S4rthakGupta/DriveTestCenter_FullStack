@@ -11,6 +11,7 @@ const authRoutes = require('./routes/authRoutes');
 const userRoutes = require('./routes/userRoutes');
 const { isAuthenticated } = require('./middleware/auth');
 
+
 // Creating an instance of an Express application
 const app = express();
 
