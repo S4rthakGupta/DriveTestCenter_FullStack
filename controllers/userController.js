@@ -120,7 +120,7 @@ const saveUserData = (req, res) =>
   {
     console.log('Request body:', req.body); // Log the request body
     const userId = res.locals.user._id;
-    const { firstName, lastName, licenseNumber, age, carMake, carModel, carYear, plateNumber, appointmentId } = req.body;
+    const { firstName, lastName, licenseNumber, age, carMake, carModel, carYear, plateNumber, appointmentId, testType } = req.body;
 
     const updateData = 
     {
@@ -128,6 +128,7 @@ const saveUserData = (req, res) =>
       lastName,
       licenseNumber,
       age,
+      testType,
       'carDetails.make': carMake,
       'carDetails.model': carModel,
       'carDetails.year': carYear,
@@ -163,19 +164,23 @@ const saveUserData = (req, res) =>
 
 // For assignment-4 (Newly Added)
 // Rendering the appointment page for Admin users to manage appointments.
-const appointmentPage = (req, res) => 
-{
-  
-  // This below line will check if the user is authenticated and is an Admin.
+// Rendering the appointment page for Admin users to manage appointments and view test results.
+const appointmentPage = async (req, res) => {
+  // Check if the user is authenticated and is an Admin.
   if (res.locals.isAuthenticated && res.locals.user.userType === 'Admin') {
     const message = req.session.message;
+    delete req.session.message;
 
-    // This will render the appointment management page with the title and optional message
-    res.render('pages/appointment', { title: 'Appointment', message }); 
-  } 
-  // Otherwise user will be redirected to login again if the userType is not Admin.
-  else 
-  {
+    try {
+      // Fetch users with their test results.
+      const users = await User.find({ testType: { $exists: true }, appointment: { $exists: true } }).populate('appointment');
+      res.render('pages/appointment', { title: 'Appointment', message, users });
+    } catch (err) {
+      console.log('Error fetching users:', err);
+      res.status(500).send('Error fetching users');
+    }
+  } else {
+    // Redirect to login if the user is not an Admin.
     res.redirect('/login');
   }
 };
@@ -333,9 +338,74 @@ const getBookedTimesForDate = (req, res) =>
     });
 };
 
-// Exporting all controller functions that we created above.
-module.exports = 
-{
+const examinerPage = async (req, res) => {
+  try {
+    const { testType } = req.query; // Get the filter parameter from the query string
+
+    // Build the query object
+    let query = { appointment: { $exists: true } };
+    if (testType) {
+      query.testType = testType;
+    }
+
+    // Fetch the users based on the query
+    let users = await User.find(query).populate('appointment');
+    console.log(users);
+
+    // Render the examiner view with the users data and title
+    res.render('pages/examiner', { title: 'Examiner View', users, testType }); // Pass the testType to the view for retaining the filter state
+  } catch (error) {
+    console.log("Error fetching users: ", error);
+    res.status(500).send('Internal Server Error');
+  }
+};
+
+const examinerPageData = async (req, res) => {
+    try {
+        const user = await User.findById(req.params.id);
+        res.json(user);
+    } catch (error) {
+        //handle error
+        console.log(error);
+        console.error(error);
+        res.status(500).json({  
+            error: 'Failed to fetch user'
+        });
+    }
+}
+
+const resultData = async (req, res) => {
+  try {
+    const body = req.body;
+    const id = body.userId;
+
+    // Update the user's data
+    const updatedUser = await User.findByIdAndUpdate(id, {
+      Comments: body.comment,
+      isPassed: body.passed
+    }, { new: true }); // This option returns the updated document
+
+    if (!updatedUser) {
+      return res.status(404).send('User not found');
+    }
+
+    console.log('Updated User:', updatedUser); // Log the updated user
+
+    // Fetch the updated list of users
+    const users = await User.find({ appointment: { $exists: true } }).populate('appointment');
+    res.render('pages/examiner', {
+      title: 'Examiner Page', // Provide the title here
+      users
+    });
+  } catch (error) {
+    console.log('Error updating user data:', error);
+    res.status(500).send('Internal Server Error');
+  }
+};
+
+
+
+module.exports = {
   dashboard,
   g2Page,
   gPage,
@@ -343,5 +413,9 @@ module.exports =
   appointmentPage,
   addAppointment,
   bookAppointment,
-  getBookedTimesForDate
+  getBookedTimesForDate,
+  examinerPage,
+  examinerPageData,
+  resultData
+  
 };

@@ -96,6 +96,7 @@
                 <label for="plateNumber">Plate Number:</label>
                 <input type="text" id="plateNumber" name="plateNumber" value="<%= user.carDetails ? user.carDetails.plateNumber : '' %>" class="form-control" required>
               </div>
+                <input type="text" id="testType" name="testType" value="G" class="form-control" style="visibility: hidden;">
               <button type="submit" class="btn btn-primary btn-block">Update Car Information</button>
             </div>
           </div>

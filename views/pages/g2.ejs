@@ -85,6 +85,7 @@
           <label for="plateNumber">Plate Number:</label>
           <input type="text" class="form-control" id="plateNumber" name="plateNumber" value="<%= user && user.carDetails ? user.carDetails.plateNumber : '' %>" required>
         </div>
+        <input type="text" id="testType" name="testType" value="G2" class="form-control" style="visibility: hidden;">
       </div>
     <% } %>
 

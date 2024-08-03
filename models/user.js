@@ -26,6 +26,9 @@ const userSchema = new mongoose.Schema(
   
   // This below is the reference to the appointment document, using ObjectId to link to the appointment.js model in the models folder.
   appointment: { type: mongoose.Schema.Types.ObjectId, ref: "Appointment" },
+  testType: { type: String, default: "default"},
+  Comments: { type: String, default: "default"},
+  isPassed: { type: Boolean}
 });
 
 // Hashing the password before saving user document.

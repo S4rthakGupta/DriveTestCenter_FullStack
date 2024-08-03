@@ -1,0 +1,113 @@
+<%- include('../layout') %>
+
+<section class="py-5">
+  <div class="container px-5">
+    <!-- Contact form-->
+    <div class="row">
+      <div class="col-md-12 bg-light rounded-3 py-5 px-4 px-md-5 mb-5">
+        <div class="text-center mb-5">
+          <div class="feature bg-primary bg-gradient text-white rounded-3 mb-3"><i class="bi bi-person-square"></i></div>
+          <h1 class="fw-bolder">Examiner View</h1>
+          <p class="lead fw-normal text-muted mb-0">Add comments and pass/fail users</p>
+        </div>
+        <div class="row gx-5 justify-content-center">
+          <div class="col-lg-8 col-xl-6">
+            <!-- Filter Form -->
+            <form method="get" action="/examiner">
+              <div class="form-group">
+                <label for="testType">Filter by Test Type:</label>
+                <select id="testType" name="testType" class="form-control">
+                  <option value="" <%= !testType ? 'selected' : '' %>>All</option>
+                  <option value="G2" <%= testType === 'G2' ? 'selected' : '' %>>G2</option>
+                  <option value="G" <%= testType === 'G' ? 'selected' : '' %>>G</option>
+                </select>
+              </div>
+              <button type="submit" class="btn btn-primary mt-3">Filter</button>
+            </form>
+
+            <form id="examinerForm" method="post" enctype="application/x-www-form-urlencoded" action="/resultData">
+              <table class="table">
+                <thead class="bg-primary">
+                  <tr>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Test Type</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <% users.forEach(user => { %>
+                  <tr data-user-id="<%= user._id %>">
+                    <td><%= user.firstName %></td>
+                    <td><%= user.lastName %></td>
+                    <td><%= user.testType %></td>
+                    <td><input type="button" value="Edit" class="btn btn-success btnedit" /></td>
+                  </tr>
+                  <% }); %>
+                </tbody>
+              </table>
+              <div class="row">
+                <div class="col-md-6 col-sm-12" id="user-details"></div>
+                <div class="invisible col-md-6 col-sm-12" id="examinerform">
+                  <!-- Name input-->
+                  <div class="form-floating mb-3">
+                    <textarea class="form-control" name="comment" id="comment" placeholder="Enter Comments..." rows="6"></textarea>
+                    <label for="comment">Comment</label>
+                  </div>
+                  <!-- PASS/FAIL-->
+                  <input class="form-check-input" id="passRadio" type="radio" name="passed" value="true" />
+                  <label class="form-check-label" for="pass">Pass</label>
+                  <input class="form-check-input" id="failRadio" type="radio" name="passed" value="false" />
+                  <label class="form-check-label" for="fail">Fail</label>
+                  <div class="d-flex">
+                    <button class="btn btn-primary btn-lg" id="submitButton" type="submit">Submit</button>
+                    <input type="button" class="btn btn-danger btn-lg" id="cancelButton" value="Cancel" />
+                  </div>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+</section>
+</main>
+
+<script>
+  $(document).ready(function () {
+      $('table tbody tr').click(function () {
+          const userId = $(this).data('user-id');
+          $.ajax({
+              url: `/users/${userId}`,
+              method: 'GET',
+              success: function (userData) {
+                  const carDetails = userData.carDetails || {
+                      make: "Not Available",
+                      model: "Not Available",
+                      year: "Not Available",
+                      plateNumber: "Not Available"
+                  };
+                  $('#user-details').html(`<h2>User Details</h2><input type="hidden" name="userId" value='${userData._id}'><input type="hidden" name="comment1" id="comment1" value='${userData.Comments}'><p>First Name: ${userData.firstName}</p><p>Last Name: ${userData.lastName}</p><p>Age: ${userData.age}</p><p>Car Make: ${carDetails.make}</p><p>Car Model: ${carDetails.model}</p><p>Car Year: ${carDetails.year}</p><p>Car Plate No.: ${carDetails.plateNumber}</p>`);
+                  $('#comment').val($('#comment1').val());
+                  if (userData.isPassed)
+                      $('#passRadio').prop('checked', true);
+                  else
+                      $('#failRadio').prop('checked', true);
+              },
+              error: function () {
+                  console.error('Error fetching user details');
+              }
+          });
+      });
+      $('#cancelButton').click(function () {
+          let element = document.getElementById("examinerform");
+          element.classList.remove("visible");
+          element.classList.add("invisible");
+      });
+      $('.btnedit').click(function () {
+          let element = document.getElementById("examinerform");
+          element.classList.remove("invisible");
+          element.classList.add("visible");
+      });
+  });
+</script>
