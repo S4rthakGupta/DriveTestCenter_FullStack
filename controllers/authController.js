@@ -84,17 +84,13 @@ const signup = async (req, res) =>
   }
 };
 
-// Handling the form submission for login
-const login = async (req, res) => 
-{
+const login = async (req, res) => {
   const { username, password } = req.body;
-  
-  // This will find the username from the DB.
-  try 
-  {
+
+  try {
+    // Find the user by username
     const user = await User.findOne({ username });
-    if (!user) 
-    {
+    if (!user) {
       return res.send(`
         <script>
           alert('Invalid username or password');
@@ -102,42 +98,32 @@ const login = async (req, res) =>
         </script>
       `);
     }
-    
-    // This will validate the password.
+
+    // Compare the provided password with the hashed password
     const isPasswordValid = await bcrypt.compare(password, user.password);
 
-    if (isPasswordValid)
-    {      
-      // Setting session variable for authenticated users.
+    if (isPasswordValid) {
+      // Set session variables for authenticated users
       req.session.user = user;
       req.session.isAuthenticated = true;
-      console.log("deugdj9i");
 
-      // If the user successfully logs in then they will be redirected to dashboard page.
+      // Redirect to dashboard page
       res.send(`
         <script>
           alert('Login successful');
           window.location.href = '/dashboard';
         </script>
       `);
-    }
-    else 
-    {
-      console.log("oh it came here");
-
-      // If the password is incorrect, user will be redirected to login page with an alert.
+    } else {
+      // Incorrect password
       res.send(`
         <script>
           alert('Invalid username or password');
           window.location.href = '/login';
         </script>
       `);
-
     }
-  }
-  catch (err) 
-  {    
-    // Handling error during login.
+  } catch (err) {
     console.log('Error during login:', err);
     res.status(500).send(`
       <script>
@@ -147,7 +133,6 @@ const login = async (req, res) =>
     `);
   }
 };
-
 // This will handle the logout and will also destroy the session.
 const logout = (req, res) => 
 {

@@ -84,33 +84,42 @@
               url: `/users/${userId}`,
               method: 'GET',
               success: function (userData) {
-                  const carDetails = userData.carDetails || {
-                      make: "Not Available",
-                      model: "Not Available",
-                      year: "Not Available",
-                      plateNumber: "Not Available"
-                  };
-                  $('#user-details').html(`<h2>User Details</h2><input type="hidden" name="userId" value='${userData._id}'><input type="hidden" name="comment1" id="comment1" value='${userData.Comments}'><p>First Name: ${userData.firstName}</p><p>Last Name: ${userData.lastName}</p><p>Age: ${userData.age}</p><p>Car Make: ${carDetails.make}</p><p>Car Model: ${carDetails.model}</p><p>Car Year: ${carDetails.year}</p><p>Car Plate No.: ${carDetails.plateNumber}</p>`);
-                  $('#comment').val($('#comment1').val());
-                  if (userData.isPassed)
-                      $('#passRadio').prop('checked', true);
-                  else
-                      $('#failRadio').prop('checked', true);
+                  if (userData.userType === 'Driver') {
+                      const carDetails = userData.carDetails || {
+                          make: "Not Available",
+                          model: "Not Available",
+                          year: "Not Available",
+                          plateNumber: "Not Available"
+                      };
+                      $('#user-details').html(`
+                          <h2>User Details</h2>
+                          <input type="hidden" name="userId" value="${userData._id}">
+                          <input type="hidden" name="comment1" id="comment1" value="${userData.Comments}">
+                          <p>First Name: ${userData.firstName}</p>
+                          <p>Last Name: ${userData.lastName}</p>
+                          <p>Age: ${userData.age}</p>
+                          <p>Car Make: ${carDetails.make}</p>
+                          <p>Car Model: ${carDetails.model}</p>
+                          <p>Car Year: ${carDetails.year}</p>
+                          <p>Car Plate No.: ${carDetails.plateNumber}</p>
+                      `);
+                      $('#comment').val($('#comment1').val());
+                      $('#passRadio').prop('checked', userData.isPassed);
+                      $('#failRadio').prop('checked', !userData.isPassed);
+                      $('#examinerform').removeClass('invisible').addClass('visible');
+                  } else {
+                      $('#user-details').html('<p>No details available for non-Driver users.</p>');
+                      $('#examinerform').removeClass('visible').addClass('invisible');
+                  }
               },
               error: function () {
                   console.error('Error fetching user details');
               }
           });
       });
+
       $('#cancelButton').click(function () {
-          let element = document.getElementById("examinerform");
-          element.classList.remove("visible");
-          element.classList.add("invisible");
-      });
-      $('.btnedit').click(function () {
-          let element = document.getElementById("examinerform");
-          element.classList.remove("invisible");
-          element.classList.add("visible");
+          $('#examinerform').removeClass('visible').addClass('invisible');
       });
   });
 </script>

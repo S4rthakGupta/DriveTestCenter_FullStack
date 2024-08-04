@@ -353,16 +353,23 @@ const getBookedTimesForDate = (req, res) =>
 
 const examinerPage = async (req, res) => {
   try {
-    const testType = req.query.testType || ''; // Ensure this line is present
-    const query = { appointment: { $exists: true } };
+    // Ensure the user is authenticated and is an Examiner
+    if (!res.locals.isAuthenticated || res.locals.user.userType !== 'Examiner') {
+      return res.redirect('/login');
+    }
+
+    const testType = req.query.testType || '';
+    const query = { appointment: { $exists: true }, userType: 'Driver' };
 
     if (testType) {
       query.testType = testType;
     }
 
+    // Fetch users based on the query
     const users = await User.find(query).populate('appointment');
-    const message = req.session.message || ''; // Get message from session if available
-    delete req.session.message; // Clear message after use
+
+    const message = req.session.message || '';
+    delete req.session.message;
 
     res.render('pages/examiner', { title: 'Examiner View', users, testType, message });
   } catch (error) {
@@ -370,19 +377,28 @@ const examinerPage = async (req, res) => {
     res.status(500).send('Internal Server Error');
   }
 };
+
+
 const examinerPageData = async (req, res) => {
-    try {
-        const user = await User.findById(req.params.id);
-        res.json(user);
-    } catch (error) {
-        //handle error
-        console.log(error);
-        console.error(error);
-        res.status(500).json({  
-            error: 'Failed to fetch user'
-        });
+  try {
+    // Ensure the user is authenticated and is an Examiner
+    if (!res.locals.isAuthenticated || res.locals.user.userType !== 'Examiner') {
+      return res.redirect('/login');
     }
-}
+
+    const user = await User.findById(req.params.id);
+
+    // Ensure that user details are only accessible if the userType is 'Driver'
+    if (user.userType !== 'Driver') {
+      return res.status(403).send('Access denied');
+    }
+
+    res.json(user);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Failed to fetch user' });
+  }
+};
 
 const resultData = async (req, res) => {
   try {
