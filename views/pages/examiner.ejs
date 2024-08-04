@@ -1,8 +1,13 @@
 <%- include('../layout') %>
 
+<% if (typeof message !== 'undefined' && message) { %>
+  <div class="alert alert-success" role="alert">
+    <%= message %>
+  </div>
+<% } %>
+
 <section class="py-5">
   <div class="container px-5">
-    <!-- Contact form-->
     <div class="row">
       <div class="col-md-12 bg-light rounded-3 py-5 px-4 px-md-5 mb-5">
         <div class="text-center mb-5">
@@ -12,14 +17,13 @@
         </div>
         <div class="row gx-5 justify-content-center">
           <div class="col-lg-8 col-xl-6">
-            <!-- Filter Form -->
             <form method="get" action="/examiner">
               <div class="form-group">
                 <label for="testType">Filter by Test Type:</label>
                 <select id="testType" name="testType" class="form-control">
-                  <option value="" <%= !testType ? 'selected' : '' %>>All</option>
-                  <option value="G2" <%= testType === 'G2' ? 'selected' : '' %>>G2</option>
-                  <option value="G" <%= testType === 'G' ? 'selected' : '' %>>G</option>
+                  <option value="" <%= (typeof testType !== 'undefined' && testType === '') ? 'selected' : '' %>>All</option>
+                  <option value="G2" <%= (typeof testType !== 'undefined' && testType === 'G2') ? 'selected' : '' %>>G2</option>
+                  <option value="G" <%= (typeof testType !== 'undefined' && testType === 'G') ? 'selected' : '' %>>G</option>
                 </select>
               </div>
               <button type="submit" class="btn btn-primary mt-3">Filter</button>
@@ -49,12 +53,10 @@
               <div class="row">
                 <div class="col-md-6 col-sm-12" id="user-details"></div>
                 <div class="invisible col-md-6 col-sm-12" id="examinerform">
-                  <!-- Name input-->
                   <div class="form-floating mb-3">
                     <textarea class="form-control" name="comment" id="comment" placeholder="Enter Comments..." rows="6"></textarea>
                     <label for="comment">Comment</label>
                   </div>
-                  <!-- PASS/FAIL-->
                   <input class="form-check-input" id="passRadio" type="radio" name="passed" value="true" />
                   <label class="form-check-label" for="pass">Pass</label>
                   <input class="form-check-input" id="failRadio" type="radio" name="passed" value="false" />
@@ -70,6 +72,7 @@
         </div>
       </div>
     </div>
+  </div>
 </section>
 </main>
 

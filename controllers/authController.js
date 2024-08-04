@@ -111,7 +111,8 @@ const login = async (req, res) =>
       // Setting session variable for authenticated users.
       req.session.user = user;
       req.session.isAuthenticated = true;
-      
+      console.log("deugdj9i");
+
       // If the user successfully logs in then they will be redirected to dashboard page.
       res.send(`
         <script>
@@ -122,6 +123,8 @@ const login = async (req, res) =>
     }
     else 
     {
+      console.log("oh it came here");
+
       // If the password is incorrect, user will be redirected to login page with an alert.
       res.send(`
         <script>
@@ -129,6 +132,7 @@ const login = async (req, res) =>
           window.location.href = '/login';
         </script>
       `);
+
     }
   }
   catch (err) 

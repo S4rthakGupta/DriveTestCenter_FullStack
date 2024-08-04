@@ -5,21 +5,34 @@ const User = require('../models/user');
 const Appointment = require('../models/appointment');
 const moment = require('moment');
 
-// Controller function for rendering the dashboard page.
-const dashboard = (req, res) => 
-{   
-  //This below line will check if user is authenticated and is of type 'Driver'.
-  if (res.locals.isAuthenticated && res.locals.user.userType === 'Driver') 
-  {
-    res.render('pages/dashboard', { title: 'Dashboard' });
-  }   
-  // This else block will redirect to login page if not authenticated or not a driver
-  else 
-  {
-    res.redirect('/login');
+
+const dashboard = async (req, res) => {
+  try {
+    const testType = req.query.testType || ''; // Get the testType from query parameters or set to empty string by default
+    const message = req.query.message || ''; // Get message from query parameters if available
+    const users = await User.find(); // Adjust query as needed
+
+    if (res.locals.isAuthenticated) {
+      const userType = res.locals.user.userType;
+      const viewData = { title: userType === 'Driver' ? 'Dashboard' : userType === 'Admin' ? 'Appointment' : 'Examiner', message };
+
+      if (userType === 'Driver') {
+        res.render('pages/dashboard', viewData);
+      } else if (userType === 'Admin') {
+        res.render('pages/appointment', { ...viewData, users });
+      } else if (userType === 'Examiner') {
+        res.render('pages/examiner', { ...viewData, users, testType });
+      } else {
+        res.redirect('/login');
+      }
+    } else {
+      res.redirect('/login');
+    }
+  } catch (error) {
+    console.error('Error fetching users:', error);
+    res.status(500).send('Internal Server Error');
   }
 };
-
 // Rendering the G2 page for Drivers with available appointment slots.
 const g2Page = (req, res) => 
 {
@@ -340,26 +353,23 @@ const getBookedTimesForDate = (req, res) =>
 
 const examinerPage = async (req, res) => {
   try {
-    const { testType } = req.query; // Get the filter parameter from the query string
+    const testType = req.query.testType || ''; // Ensure this line is present
+    const query = { appointment: { $exists: true } };
 
-    // Build the query object
-    let query = { appointment: { $exists: true } };
     if (testType) {
       query.testType = testType;
     }
 
-    // Fetch the users based on the query
-    let users = await User.find(query).populate('appointment');
-    console.log(users);
+    const users = await User.find(query).populate('appointment');
+    const message = req.session.message || ''; // Get message from session if available
+    delete req.session.message; // Clear message after use
 
-    // Render the examiner view with the users data and title
-    res.render('pages/examiner', { title: 'Examiner View', users, testType }); // Pass the testType to the view for retaining the filter state
+    res.render('pages/examiner', { title: 'Examiner View', users, testType, message });
   } catch (error) {
-    console.log("Error fetching users: ", error);
+    console.error('Error fetching users:', error);
     res.status(500).send('Internal Server Error');
   }
 };
-
 const examinerPageData = async (req, res) => {
     try {
         const user = await User.findById(req.params.id);
