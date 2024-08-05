@@ -28,32 +28,36 @@
     <button type="submit" class="btn btn-primary">Add Appointment</button>
   </form>
 
-  <!-- List of Pass/Fail Candidates -->
-  <h2 class="mt-5">Pass/Fail Candidates</h2>
-  <table class="table table-bordered mt-3">
-    <thead>
-      <tr>
-        <th>Username</th>
-        <th>First Name</th>
-        <th>Last Name</th>
-        <th>Test Type</th>
-        <th>Comments</th>
-        <th>Status</th>
-      </tr>
-    </thead>
-    <tbody>
-      <% users.forEach(user => { %>
+  <% const passedOrFailedCandidates = users.filter(user => user.userType === 'Driver' && user.isPassed !== undefined); %>
+
+  <% if (passedOrFailedCandidates.length > 0) { %>
+    <!-- List of Pass/Fail Candidates -->
+    <h2 class="mt-5">Pass/Fail Candidates</h2>
+    <table class="table table-bordered mt-3">
+      <thead>
         <tr>
-          <td><%= user.username %></td>
-          <td><%= user.firstName %></td>
-          <td><%= user.lastName %></td>
-          <td><%= user.testType %></td>
-          <td><%= user.Comments %></td>
-          <td><%= user.isPassed ? 'Pass' : 'Fail' %></td>
+          <th>Username</th>
+          <th>First Name</th>
+          <th>Last Name</th>
+          <th>Test Type</th>
+          <th>Comments</th>
+          <th>Status</th>
         </tr>
-      <% }) %>
-    </tbody>
-  </table>
+      </thead>
+      <tbody>
+        <% passedOrFailedCandidates.forEach(user => { %>
+          <tr>
+            <td><%= user.username %></td>
+            <td><%= user.firstName %></td>
+            <td><%= user.lastName %></td>
+            <td><%= user.testType %></td>
+            <td><%= user.Comments %></td>
+            <td><%= user.isPassed ? 'Pass' : 'Fail' %></td>
+          </tr>
+        <% }) %>
+      </tbody>
+    </table>
+  <% } %>
 </div>
 
 <script>

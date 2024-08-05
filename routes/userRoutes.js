@@ -1,18 +1,35 @@
 const express = require("express");
 const router = express.Router();
-const userController = require("../controllers/userController");
+
 const { isAuthenticated, isExaminer, isAdmin, isDriver } = require('../middleware/auth');
 
-router.get("/dashboard", isAuthenticated, userController.dashboard);
-router.get("/g2", isAuthenticated, isDriver, userController.g2Page);
-router.get("/g", isAuthenticated, isDriver, userController.gPage);
-router.post("/saveUserData", isAuthenticated, isDriver, userController.saveUserData);
-router.get('/appointment', isAuthenticated, isAdmin, userController.appointmentPage);
-router.post('/add-appointment', isAuthenticated, isAdmin, userController.addAppointment);
-router.post('/book-appointment', isAuthenticated, isDriver, userController.bookAppointment);
-router.get('/appointments/:date', isAuthenticated, userController.getBookedTimesForDate);
-router.get('/examiner', isAuthenticated, isExaminer, userController.examinerPage);
-router.post('/resultData', isAuthenticated, isExaminer, userController.resultData);
-router.get('/users/:id', isExaminer, userController.examinerPageData);
+const dashboardController = require('../controllers/dashboardController');
+const g2PageController = require('../controllers/g2PageController');
+const gPageController = require('../controllers/gPageController');
+const saveUserDataController = require('../controllers/saveUserDataController');
+const appointmentPageController = require('../controllers/appointmentPageController');
+const addAppointmentController = require('../controllers/addAppointmentController');
+const bookedTimesController = require('../controllers/bookedTimesController');
+const examinerController = require('../controllers/examinerController');
+const testResultController = require('../controllers/testResultController');
+const bookAppointmentController = require('../controllers/bookAppointmentController');
+
+
+
+router.get("/dashboard", isAuthenticated, dashboardController.dashboard);
+router.get("/g2", isAuthenticated, isDriver, g2PageController.g2Page);
+router.get("/g", isAuthenticated, isDriver, gPageController.gPage);
+router.post("/saveUserData", isAuthenticated, isDriver, saveUserDataController.saveUserData);
+router.get('/appointment', isAuthenticated, isAdmin, appointmentPageController.appointmentPage);
+router.post('/add-appointment', isAuthenticated, isAdmin, addAppointmentController.addAppointment);
+router.get('/appointments/:date', isAuthenticated, bookedTimesController.getBookedTimesForDate);
+router.get('/examiner', isAuthenticated, isExaminer, examinerController.examinerPage);
+router.post('/resultData', isAuthenticated, isExaminer, testResultController.resultData);
+router.post('/book-appointment', isAuthenticated, isDriver, bookAppointmentController.bookAppointment);
+
+
+router.get('/users/:id', isExaminer, examinerController.examinerPageData);
 
 module.exports = router;
+
+6479499344

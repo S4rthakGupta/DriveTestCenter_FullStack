@@ -40,7 +40,112 @@ footer
     padding: 9rem 2rem;
 }
 
+.bg-primary {
+    background-color: #3a3a3a !important;
+}
 
+.custom-form-container {
+    border: 1px solid #ccc;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 5px;
+  }
+
+  .form-check.custom-radio {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+
+  .form-check.custom-radio .form-check-input {
+    margin-right: 10px;
+  }
+
+  .form-check.custom-radio label {
+    margin: 0;
+  }
+
+  .custom-buttons {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .custom-buttons .btn {
+    flex: 1;
+    margin: 0 5px;
+  }
+
+  .btn-view-driver {
+    background-color: #007bff; /* Change to desired color */
+    color: #ffffff; /* Text color */
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+  }
+
+  .btn-view-driver:hover {
+    background-color: #0056b3; /* Change to desired hover color */
+  }
+
+  .btn-primary {
+    background-color: #0056b3 !important; /* Change to desired color */
+    color: #ffffff; /* Text color */
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+  }
+
+  .btn-primary:hover {
+    background-color: #aeaeae; /* Change to desired hover color */
+  }
+
+  .btn-cancel {
+    background-color: #dc3545; /* Change to desired color */
+    color: #ffffff; /* Text color */
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+  }
+
+  .btn-cancel:hover {
+    background-color: #c82333; /* Change to desired hover color */
+  }
+
+  .btn-success {
+    color: #fff;
+    background-color: #696969;
+    border-color: #000000;
+}
+  .btn-success:hover {
+
+    background-color: #000000 !important;
+}
+
+  #examinerform.visible {
+    display: block;
+  }
+
+  #examinerform.invisible {
+    display: none;
+  }
+
+  .btn-lg {
+    margin-top: 10px;
+  }
+
+  #resultMessage.visible {
+    display: block;
+  }
+
+  #resultMessage.invisible {
+    display: none;
+  }
 /* This below code is for the (dashboard.ejs) */
 .containerDashboard 
 {

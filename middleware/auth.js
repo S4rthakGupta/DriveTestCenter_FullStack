@@ -17,7 +17,6 @@ const isDriver = (req, res, next) => {
 // Middleware to check if the user is an Admin
 const isAdmin = (req, res, next) => {
   if (req.session.user && req.session.user.userType === 'Admin') {
-    console.log("Admin is being logged in???")
     return next();
   }
   res.status(403).send('Access denied');

@@ -1,4 +1,3 @@
-<!-- This is the NAVBAR from Bootstrap for all the pages and is included under a folder: (partials) -->
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <a class="navbar-brand" href="/">Book DriveTest</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -6,13 +5,16 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav ml-auto">
-            <li class="nav-item">
-                <a class="nav-link" href="/dashboard">Dashboard</a>
-            </li>
+            <!-- Display Dashboard link only if the user is a Driver -->
+            <% if (isAuthenticated && user.userType === 'Driver') { %>
+                <li class="nav-item">
+                    <a class="nav-link" href="/dashboard">Dashboard</a>
+                </li>
+            <% } %>
             
             <!-- Adding if else code so that if user is logged in, they see everything and if not, they will be asked to login. -->
-             <!-- Making sure that if the user type is Admin then only they see the appointment page otherwise not. -->
-             <% if (isAuthenticated) { %>
+            <!-- Making sure that if the user type is Admin then only they see the appointment page otherwise not. -->
+            <% if (isAuthenticated) { %>
                 <% if (user.userType === 'Driver') { %>
                     <li class="nav-item">
                         <a class="nav-link" href="/g2">G2 Test</a>
