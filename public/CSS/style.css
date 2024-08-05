@@ -1,235 +1,256 @@
 body 
 {
-    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-    color: black;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+  color: black;
 }
 
 .navbar 
 {
-    margin-bottom: 20px;
+  margin-bottom: 20px;
 }
 
 .container 
 {
-    margin-top: 20px;
-    color: black;
-    line-height: 10.5px;
+  margin-top: 20px;
+  color: black;
+  line-height: 10.5px;
 }
 
 footer 
 {
-    margin-top: 20px;
-    text-align: center;
+  margin-top: 20px;
+  text-align: center;
 }
 
 .mt-4 
 {
-    /* This is the override code of bootstrap by using !important */
-    margin-top: 0 !important; 
+  /* This is the override code of bootstrap by using !important */
+  margin-top: 0 !important;
 }
 
 .navbar 
 {
-    margin-bottom: 0 !important; 
-    border-radius: 0% !important; 
+  margin-bottom: 0 !important;
+  border-radius: 0% !important;
 }
 
 .jumbotron 
 {
-    border-radius: 0% !important; 
-    padding: 9rem 2rem;
+  border-radius: 0% !important;
+  padding: 9rem 2rem;
 }
 
-.bg-primary {
-    background-color: #3a3a3a !important;
+.bg-primary 
+{
+  background-color: #3a3a3a !important;
 }
 
-.custom-form-container {
-    border: 1px solid #ccc;
-    padding: 20px;
-    background-color: #f9f9f9;
-    border-radius: 5px;
-  }
-
-  .form-check.custom-radio {
-    display: flex;
-    align-items: center;
-    margin-bottom: 10px;
-  }
-
-  .form-check.custom-radio .form-check-input {
-    margin-right: 10px;
-  }
-
-  .form-check.custom-radio label {
-    margin: 0;
-  }
-
-  .custom-buttons {
-    display: flex;
-    justify-content: space-between;
-  }
-
-  .custom-buttons .btn {
-    flex: 1;
-    margin: 0 5px;
-  }
-
-  .btn-view-driver {
-    background-color: #007bff; /* Change to desired color */
-    color: #ffffff; /* Text color */
-    border: none;
-    border-radius: 5px;
-    padding: 10px 20px;
-    font-size: 16px;
-    cursor: pointer;
-  }
-
-  .btn-view-driver:hover {
-    background-color: #0056b3; /* Change to desired hover color */
-  }
-
-  .btn-primary {
-    background-color: #0056b3 !important; /* Change to desired color */
-    color: #ffffff; /* Text color */
-    border: none;
-    border-radius: 5px;
-    padding: 10px 20px;
-    font-size: 16px;
-    cursor: pointer;
-  }
-
-  .btn-primary:hover {
-    background-color: #aeaeae; /* Change to desired hover color */
-  }
-
-  .btn-cancel {
-    background-color: #dc3545; /* Change to desired color */
-    color: #ffffff; /* Text color */
-    border: none;
-    border-radius: 5px;
-    padding: 10px 20px;
-    font-size: 16px;
-    cursor: pointer;
-  }
-
-  .btn-cancel:hover {
-    background-color: #c82333; /* Change to desired hover color */
-  }
-
-  .btn-success {
-    color: #fff;
-    background-color: #696969;
-    border-color: #000000;
-}
-  .btn-success:hover {
-
-    background-color: #000000 !important;
+.custom-form-container 
+{
+  border: 1px solid #ccc;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 5px;
 }
 
-  #examinerform.visible {
-    display: block;
-  }
+.form-check.custom-radio 
+{
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
 
-  #examinerform.invisible {
-    display: none;
-  }
+.form-check.custom-radio .form-check-input 
+{
+  margin-right: 10px;
+}
 
-  .btn-lg {
-    margin-top: 10px;
-  }
+.form-check.custom-radio label 
+{
+  margin: 0;
+}
 
-  #resultMessage.visible {
-    display: block;
-  }
+.custom-buttons 
+{
+  display: flex;
+  justify-content: space-between;
+}
 
-  #resultMessage.invisible {
-    display: none;
-  }
+.custom-buttons .btn 
+{
+  flex: 1;
+  margin: 0 5px;
+}
+
+/* This below lines of styling is for the Examiner page and under theat the Comments section. */
+.btn-view-driver 
+{
+  background-color: #007bff;
+  color: #ffffff;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.btn-view-driver:hover 
+{
+  background-color: #0056b3;
+}
+
+.btn-primary 
+{
+  background-color: #0056b3 !important;
+  color: #ffffff;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.btn-primary:hover 
+{
+  background-color: #aeaeae; 
+}
+
+.btn-cancel 
+{
+  background-color: #dc3545;
+  color: #ffffff;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.btn-cancel:hover 
+{
+  background-color: #c82333; 
+}
+
+.btn-success 
+{
+  color: #fff;
+  background-color: #696969;
+  border-color: #000000;
+}
+.btn-success:hover 
+{
+  background-color: #000000 !important;
+}
+
+#examinerform.visible 
+{
+  display: block;
+}
+
+#examinerform.invisible 
+{
+  display: none;
+}
+
+.btn-lg 
+{
+  margin-top: 10px;
+}
+
+#resultMessage.visible 
+{
+  display: block;
+}
+
+#resultMessage.invisible
+ {
+  display: none;
+}
+
 /* This below code is for the (dashboard.ejs) */
 .containerDashboard 
 {
-    margin-top: 20px;
-    color: black;
-    text-align: center;
-    line-height: 10.5px;
+  margin-top: 20px;
+  color: black;
+  text-align: center;
+  line-height: 10.5px;
 }
 
-.h1
+.h1 
 {
-    font-size: 73px;
-    font-weight: bolder;
-    text-align: center;
-    padding-top: 120px;
-    color: white;
+  font-size: 73px;
+  font-weight: bolder;
+  text-align: center;
+  padding-top: 120px;
+  color: white;
 }
 
 /* This below code is for the (driver_dashboard.ejs) */
-.lead
+.lead 
 {
-    text-align: center !important;
+  text-align: center !important;
 }
 
-.display-4
+.display-4 
 {
-    text-align: center !important;
+  text-align: center !important;
 }
 
-.h4
+.h4 
 {
-    text-align: center;
-    margin-top: -17px;
-    font-size: 18px;
-    color: white;
+  text-align: center;
+  margin-top: -17px;
+  font-size: 18px;
+  color: white;
 }
 
 /* This below code is for (g2.ejs) */
 .form-section 
 {
-    margin-bottom: 30px;
+  margin-bottom: 30px;
 }
 
 .form-section h2 
 {
-    margin-bottom: 20px;
-    font-weight: bold;
+  margin-bottom: 20px;
+  font-weight: bold;
 }
 
 .btn-primary 
 {
-    background-color: #007bff;
-    border-color: #007bff;
-    margin-bottom: 20px;
+  background-color: #007bff;
+  border-color: #007bff;
+  margin-bottom: 20px;
 }
 
 .btn-primary:hover 
 {
-    background-color: #0056b3;
-    border-color: #004085;
+  background-color: #0056b3;
+  border-color: #004085;
 }
 
 .success 
 {
-    font-weight: bolder;
-    text-align: center;
-    margin-top: 190px;
+  font-weight: bolder;
+  text-align: center;
+  margin-top: 190px;
 }
 
 /* This styling below is for the success page. */
-.success-btn
+.success-btn 
 {
-    text-align: center;
-    margin-top: 10px;
+  text-align: center;
+  margin-top: 10px;
 }
 
-.g2-page-btn
+.g2-page-btn 
 {
-    display: flex;
+  display: flex;
 }
 
-.btn-secondary
+.btn-secondary 
 {
-    font-weight: bolder !important;
-    margin-bottom: 10px;
+  font-weight: bolder !important;
+  margin-bottom: 10px;
 }
-

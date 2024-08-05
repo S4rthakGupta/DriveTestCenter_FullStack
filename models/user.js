@@ -26,6 +26,8 @@ const userSchema = new mongoose.Schema(
   
   // This below is the reference to the appointment document, using ObjectId to link to the appointment.js model in the models folder.
   appointment: { type: mongoose.Schema.Types.ObjectId, ref: "Appointment" },
+
+  // This is for the Examiner userType and it will store information of the test result of the Driver.
   testType: { type: String},
   Comments: { type: String},
   isPassed: { type: Boolean}

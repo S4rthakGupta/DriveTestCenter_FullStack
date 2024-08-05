@@ -1,8 +1,13 @@
-const express = require("express");
+// Importing neccessary libraries.
+const express = require('express');
+
+// Creating a router instance using Express router.
 const router = express.Router();
 
+// Requiring the middleware from auth.js file.
 const { isAuthenticated, isExaminer, isAdmin, isDriver } = require('../middleware/auth');
 
+// Importing all the controllers for handling operations for all the userTypes.
 const routesController = require('../controllers/routesController');
 const g2PageController = require('../controllers/g2PageController');
 const gPageController = require('../controllers/gPageController');
@@ -12,10 +17,8 @@ const addAppointmentController = require('../controllers/addAppointmentControlle
 const bookedTimesController = require('../controllers/bookedTimesController');
 const examinerController = require('../controllers/examinerController');
 const testResultController = require('../controllers/testResultController');
-const bookAppointmentController = require('../controllers/bookAppointmentController');
 
-
-
+// Routes for rendering the different sort of pages as per the requirement for the user.
 router.get("/dashboard", isAuthenticated, routesController.allRoutes);
 router.get("/g2", isAuthenticated, isDriver, g2PageController.g2Page);
 router.get("/g", isAuthenticated, isDriver, gPageController.gPage);
@@ -25,9 +28,9 @@ router.post('/add-appointment', isAuthenticated, isAdmin, addAppointmentControll
 router.get('/appointments/:date', isAuthenticated, bookedTimesController.getBookedTimesForDate);
 router.get('/examiner', isAuthenticated, isExaminer, examinerController.examinerPage);
 router.post('/resultData', isAuthenticated, isExaminer, testResultController.resultData);
-router.post('/book-appointment', isAuthenticated, isDriver, bookAppointmentController.bookAppointment);
 
-
+// Route for fetching user data by ID, accessible only to examiners. (code is in examiner.ejs - script)
 router.get('/users/:id', isExaminer, examinerController.examinerPageData);
 
+// Exporting routers to be used in the app.js
 module.exports = router;
