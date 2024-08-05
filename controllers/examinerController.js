@@ -1,6 +1,5 @@
 const User = require('../models/user');
-const Appointment = require('../models/appointment');
-const moment = require('moment');
+
 
 const examinerPage = async (req, res) => {
   try {
@@ -39,4 +38,5 @@ const examinerPageData = async (req, res) => {
   }
 };
 
+// Exporting the whole controller and is used in the routes folder.
 module.exports = { examinerPage, examinerPageData };

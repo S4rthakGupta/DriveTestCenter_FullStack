@@ -1,5 +1,5 @@
 const User = require('../models/user');
-const moment = require('moment');
+
 
 const dashboard = async (req, res) => {
   try {
@@ -29,6 +29,7 @@ const dashboard = async (req, res) => {
   }
 };
 
+// Exporting the whole controller and is used in the routes folder.
 module.exports = { 
   dashboard
 };

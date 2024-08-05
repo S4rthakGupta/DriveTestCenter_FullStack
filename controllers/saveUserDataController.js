@@ -1,6 +1,4 @@
 const User = require('../models/user');
-const Appointment = require('../models/appointment');
-const moment = require('moment');
 
 
 // Controller function for saving user data
@@ -52,6 +50,7 @@ const saveUserData = (req, res) =>
       }
     };
 
+    // Exporting the whole controller and is used in the routes folder.
     module.exports= {
         saveUserData
         

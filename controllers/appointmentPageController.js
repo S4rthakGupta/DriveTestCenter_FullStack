@@ -1,6 +1,5 @@
 const User = require('../models/user');
-const Appointment = require('../models/appointment');
-const moment = require('moment');
+
 
 const appointmentPage = async (req, res) => {
     // Check if the user is authenticated and is an Admin.
@@ -22,6 +21,7 @@ const appointmentPage = async (req, res) => {
     }
   };
 
+  // Exporting the whole controller and is used in the routes folder.
   module.exports= {
     appointmentPage
 };

@@ -1,5 +1,5 @@
 const User = require('../models/user');
-const bcrypt = require('bcrypt');
+
 
 // Rendering the signup page
 const renderSignup = (req, res) => {
@@ -74,6 +74,7 @@ const signup = async (req, res) =>
     }
   };
 
+  // Exporting the whole controller and is used in the routes folder.
 module.exports = {
   renderSignup,
   signup

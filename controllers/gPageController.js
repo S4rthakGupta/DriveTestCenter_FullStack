@@ -1,10 +1,6 @@
 // Requiring the User Schema from the models folder.
 const User = require('../models/user');
 
-// Importing necessary models and libraries.
-const Appointment = require('../models/appointment');
-const moment = require('moment');
-
 
 // Rendering the G page for Drivers showing their information.
 const gPage = (req, res) => 
@@ -44,4 +40,5 @@ const gPage = (req, res) =>
   }
 };
 
+// Exporting the whole controller and is used in the routes folder.
 module.exports = { gPage };

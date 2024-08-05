@@ -61,4 +61,6 @@ const g2Page = (req, res) =>
   }
 
 };
+
+// Exporting the whole controller and is used in the routes folder.
 module.exports = { g2Page };

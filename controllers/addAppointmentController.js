@@ -1,8 +1,9 @@
+// Requiring the DB (Schema).
 const User = require('../models/user');
 
 // Importing necessary models and libraries.
 const Appointment = require('../models/appointment');
-const moment = require('moment');
+
 
 // Controller function for adding appointments by Admin.
 const addAppointment = (req, res) => 
@@ -72,4 +73,5 @@ const addAppointment = (req, res) =>
       }
     };
     
-    module.exports = { addAppointment };
+  // Exporting the whole controller and is used in the routes folder.
+  module.exports = { addAppointment };

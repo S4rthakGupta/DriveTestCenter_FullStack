@@ -2,7 +2,7 @@ const User = require('../models/user');
 
 // Importing necessary models and libraries.
 const Appointment = require('../models/appointment');
-const moment = require('moment');
+
 
 // This will fetch the booked time slots for a given date.
 const getBookedTimesForDate = (req, res) =>
@@ -27,4 +27,5 @@ const getBookedTimesForDate = (req, res) =>
         });
     };
 
-    module.exports = { getBookedTimesForDate };
+  // Exporting the whole controller and is used in the routes folder.
+  module.exports = { getBookedTimesForDate };

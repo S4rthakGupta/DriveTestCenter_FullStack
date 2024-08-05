@@ -6,6 +6,7 @@ const logout = (req, res) => {
     });
   };
   
+  // Exporting the whole controller and is used in the routes folder.
   module.exports = {
     logout
   };
