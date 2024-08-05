@@ -1,5 +1,5 @@
 # DriveTestCenter_FullStack
- This is the final project which was done in 4 parts and is for my university.
+ This is the final project which was done in 5 parts and is my university project.
 
  Please type in the command to download all the necessary packages to execute the application.
 - npm install to download all the node modules and then enter

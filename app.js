@@ -1,8 +1,3 @@
-// Group Number: 1
-// Members: Sarthak Gupta, Nidhi Katiyar, Harshkumar Patel.
-// Work done by team members written in (work-done.txt) file in the directory.
-// Group Project: 1.
-
 // This code will import all the modules.
 const express = require('express');
 const path = require('path');
@@ -55,20 +50,20 @@ app.use(userRoutes);
 const PORT = 3002;
 
 // Please add your own connection String.
-const URI = 'mongodb+srv://sarthak1797:sarthak1797@cluster-drivetest.xdvmr6p.mongodb.net/Drive-Test-DB?retryWrites=true&w=majority&appName=Cluster-DriveTest'
+const URI = 'mongodb+srv://<username>:<password>@<cluster-url>/<database-name>?retryWrites=true&w=majority&appName=<app-name>';
 
 // Connecting to MongoDB using Mongoose package which is installed already using (npm i mongoose).
 mongoose.connect(URI)
 .then(result => app.listen(PORT, (req, res) =>
 {
-    // The Server will only start if the database is connected.
-    console.log(`DB is connected & Server is running on http://localhost:${PORT}.`);
-}) )
+  // The Server will only start if the database is connected.
+  console.log(`DB is connected & Server is running on http://localhost:${PORT}.`);
+}))
 .catch(err => console.log(err));
 
 // Route for the home page.
 app.get('/', (req, res) => 
 {
   res.render('pages/home', { title: 'Home', body: '<%- include("pages/home") %>' });
-    // This above line will render the 'home' page from the 'pages' directory, passing in a title and including the 'home' page content and same thing for all the routes as well.
+  // This above line will render the 'home' page from the 'pages' directory, passing in a title and including the 'home' page content and same thing for all the routes as well.
 });
