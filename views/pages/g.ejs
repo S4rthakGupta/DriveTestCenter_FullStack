@@ -1,9 +1,12 @@
+<!-- Include the common layout template for consistent structure -->
 <%- include('../layout') %>
 
 <div class="container g-page-container">
   <h1 class="text-center mb-4">You can retrieve or update your data.</h1>
 
+  <!-- Check if user data is available -->
   <% if (user) { %>
+    <!-- If there is some message to display, it will be displayed. -->
     <% if (message) { %>
       <div class="alert alert-success" role="alert">
         <%= message %>
@@ -27,6 +30,7 @@
           <div class="card-body">
             <h2 class="card-title text-center mb-3">Car Details</h2>
             <% if (user.carDetails) { %>
+              <!-- If else block to display user details. -->
               <p class="card-text"><strong>Make:</strong> <%= user.carDetails.make %></p>
               <p class="card-text"><strong>Model:</strong> <%= user.carDetails.model %></p>
               <p class="card-text"><strong>Year:</strong> <%= user.carDetails.year %></p>
@@ -46,14 +50,17 @@
             <h2 class="card-title text-center mb-3">Appointment Details</h2>
             <p class="card-text">
               <strong>Date:</strong>
+              <!-- This will check if appointment date is available -->
               <% if (user.appointment && user.appointment.date) { %>
                 <%= new Date(user.appointment.date).toISOString().split('T')[0] %>
+                <!-- It will display N/A if no date is available. -->
               <% } else { %>
                 N/A
               <% } %>
             </p>
             <p class="card-text">
               <strong>Time:</strong>
+              <!-- Same like up, checks appointment time available or not -->
               <% if (user.appointment && user.appointment.time) { %>
                 <%= user.appointment.time %>
               <% } else { %>
@@ -67,10 +74,12 @@
         <div class="card mb-4">
           <div class="card-body">
             <h2 class="card-title text-center mb-3">Examiner Comments</h2>
+            <!-- This if block will check if comments passed by examiner are available or not. -->
             <% if (user.Comments) { %>
               <p class="card-text"><strong>Comments:</strong> <%= user.Comments %></p>
               <p class="card-text"><strong>Passed:</strong> <%= user.isPassed ? 'Yes' : 'No' %></p>
             <% } else { %>
+              <!-- It will display this on g page if not comments are provided by the examiner. -->
               <p class="card-text">Result not declared yet.</p>
             <% } %>
           </div>
@@ -78,6 +87,7 @@
       </div>
     </div>
 
+    <!-- Checks if user has provided personal info or not. -->
     <% if (hasPersonalInfo) { %>
       <div class="section mt-4">
         <form id="updateForm" action="/saveUserData" method="POST">
@@ -106,6 +116,7 @@
           </div>
         </form>
       </div>
+      <!-- If they have not then it will go in else block asking for updating user info. -->
     <% } else { %>
       <div class="alert alert-warning mt-4">
         <p>Please update your personal information to be able to give your exam.</p>
@@ -113,5 +124,3 @@
     <% } %>
   <% } %>
 </div>
-
-<!-- Chnged -->
