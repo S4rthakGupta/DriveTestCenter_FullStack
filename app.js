@@ -52,7 +52,7 @@ app.use(authRoutes);
 app.use(isAuthenticated);
 app.use(userRoutes);
 
-const PORT = 3001;
+const PORT = 3002;
 
 // Please add your own connection String.
 const URI = 'mongodb+srv://sarthak1797:sarthak1797@cluster-drivetest.xdvmr6p.mongodb.net/Drive-Test-DB?retryWrites=true&w=majority&appName=Cluster-DriveTest'
