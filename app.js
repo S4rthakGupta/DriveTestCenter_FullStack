@@ -1,4 +1,7 @@
-// Assignment: 4
+// Group Number: 1
+// Members: Sarthak Gupta, Nidhi Katiyar, Harshkumar Patel.
+// Work done by team members written in (work-done.txt) file in the directory.
+// Group Project: 1.
 
 // This code will import all the modules.
 const express = require('express');
@@ -10,7 +13,6 @@ const session = require('express-session');
 const authRoutes = require('./routes/authRoutes');
 const userRoutes = require('./routes/userRoutes');
 const { isAuthenticated } = require('./middleware/auth');
-
 
 // Creating an instance of an Express application
 const app = express();

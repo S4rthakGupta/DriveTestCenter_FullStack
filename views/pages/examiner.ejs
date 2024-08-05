@@ -1,11 +1,14 @@
+<!-- This below line will include (EJS Template) all the HTML as well as the BOOTSTRAP in this page. -->
 <%- include('../layout') %>
 
+<!-- If else block to check if the message is available before the page gets rendered. -->
 <% if (typeof message !== 'undefined' && message) { %>
   <div class="alert alert-success" role="alert">
     <%= message %>
   </div>
 <% } %>
 
+<!-- This is the UI for the Examiner page. -->
 <section class="py-5">
   <div class="container px-5">
     <div class="row">
@@ -21,6 +24,7 @@
               <div class="form-group">
                 <label for="testType">Filter by Test Type:</label>
                 <select id="testType" name="testType" class="form-control">
+                  <!-- This is the filter a sper the instructions to display users according to their test type. -->
                   <option value="" <%= (typeof testType !== 'undefined' && testType === '') ? 'selected' : '' %>>All</option>
                   <option value="G2" <%= (typeof testType !== 'undefined' && testType === 'G2') ? 'selected' : '' %>>G2</option>
                   <option value="G" <%= (typeof testType !== 'undefined' && testType === 'G') ? 'selected' : '' %>>G</option>
@@ -40,11 +44,13 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <% users.forEach(user => { %>
+                  <% users.forEach(user => { %>                    
+                    <!-- This below line will iterate through each user and create a table row for their details -->
                   <tr data-user-id="<%= user._id %>">
                     <td><%= user.firstName %></td>
                     <td><%= user.lastName %></td>
                     <td><%= user.testType %></td>
+                    <!-- This is the button to view the driver details. -->
                     <td><button type="button" class="btn btn-success btnedit">View Driver</button></td>
                   </tr>
                   <% }); %>
@@ -71,6 +77,7 @@
                   </div>
                 </div>
                 <div id="resultMessage" class="alert alert-info invisible mt-3" role="alert">
+                  <!-- It will display this once the examiner has passed or failed the user. -->
                   Result has been declared and no further changes are allowed.
                 </div>
               </div>
@@ -82,8 +89,6 @@
   </div>
 </section>
 </main>
-
-
 
 <script>
   $(document).ready(function () {
