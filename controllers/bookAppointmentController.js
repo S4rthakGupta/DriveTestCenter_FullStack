@@ -1,3 +1,4 @@
+// Requiring the DB (Schema).
 const User = require('../models/user');
 
 // Importing necessary models and libraries.
@@ -66,7 +67,8 @@ const bookAppointment = (req, res) =>
     };
     
 
-  // Exporting the whole controller and is used in the routes folder.  
-  module.exports = {
-      bookAppointment,
-    };
+// Exporting the whole controller and is used in the routes folder.  
+module.exports = 
+{
+  bookAppointment,
+};

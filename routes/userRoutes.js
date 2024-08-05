@@ -3,7 +3,7 @@ const router = express.Router();
 
 const { isAuthenticated, isExaminer, isAdmin, isDriver } = require('../middleware/auth');
 
-const dashboardController = require('../controllers/dashboardController');
+const routesController = require('../controllers/routesController');
 const g2PageController = require('../controllers/g2PageController');
 const gPageController = require('../controllers/gPageController');
 const saveUserDataController = require('../controllers/saveUserDataController');
@@ -16,7 +16,7 @@ const bookAppointmentController = require('../controllers/bookAppointmentControl
 
 
 
-router.get("/dashboard", isAuthenticated, dashboardController.dashboard);
+router.get("/dashboard", isAuthenticated, routesController.allRoutes);
 router.get("/g2", isAuthenticated, isDriver, g2PageController.g2Page);
 router.get("/g", isAuthenticated, isDriver, gPageController.gPage);
 router.post("/saveUserData", isAuthenticated, isDriver, saveUserDataController.saveUserData);
@@ -31,5 +31,3 @@ router.post('/book-appointment', isAuthenticated, isDriver, bookAppointmentContr
 router.get('/users/:id', isExaminer, examinerController.examinerPageData);
 
 module.exports = router;
-
-6479499344

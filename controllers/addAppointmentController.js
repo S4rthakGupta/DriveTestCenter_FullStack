@@ -4,7 +4,7 @@ const User = require("../models/user");
 // Importing necessary models and libraries.
 const Appointment = require("../models/appointment");
 
-// Controller function for adding appointments by Admin.
+// Controller function for adding appointments which are to be done by the "Admin".
 const addAppointment = (req, res) => 
 {
   // This below if statement will check if the user is authenticated and the userType is Admin.
